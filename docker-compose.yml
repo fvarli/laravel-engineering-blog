@@ -41,7 +41,7 @@ services:
         image: nginx:alpine
         container_name: laravel_engineering_blog_nginx_web
         ports:
-            - "8080:80"
+            - "8000:80"
         volumes:
             - .:/var/www
             - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
