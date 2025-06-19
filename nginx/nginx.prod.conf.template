@@ -1,0 +1,47 @@
+# Redirect all HTTP traffic to HTTPS and allow Let's Encrypt validation
+server {
+    listen 80;
+    server_name ${NGINX_SERVER_NAME};
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/public;
+        allow all;
+    }
+
+    location / {
+        return 301 https://${NGINX_SERVER_NAME}$request_uri;
+    }
+}
+
+# HTTPS server block
+server {
+    listen 443 ssl;
+    server_name ${NGINX_SERVER_NAME};
+
+    ssl_certificate /etc/letsencrypt/live/${NGINX_SERVER_NAME}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${NGINX_SERVER_NAME}/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    root /var/www/public;
+    index index.php index.html;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass laravel_engineering_blog_app:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
