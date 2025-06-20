@@ -22,7 +22,7 @@ services:
       - laravel_engineering_blog_net
 
   nginx:
-    image: nginx:alpine
+    image: nginx:1.25-alpine
     container_name: laravel_engineering_blog_nginx_web
     restart: unless-stopped
     ports:
