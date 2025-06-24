@@ -2,13 +2,16 @@ version: "3.8"
 
 services:
   nginx:
-    image: nginx:1.25-alpine
+    image: nginx:alpine
     container_name: nginx_certbot_temp
     ports:
       - "80:80"
+    env_file:
+      - .env
     volumes:
       - ./public:/var/www/public
-      - ./nginx/nginx.certbot.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx:/etc/nginx/templates
+    entrypoint: /bin/sh -c "envsubst '\$NGINX_SERVER_NAME' < /etc/nginx/templates/nginx.certbot.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
     networks:
       - laravel_engineering_blog_net
 
