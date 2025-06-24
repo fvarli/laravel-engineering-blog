@@ -7,7 +7,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - .:/var/www
+      - ./public:/var/www/public
       - ./nginx/nginx.certbot.conf:/etc/nginx/conf.d/default.conf
     networks:
       - laravel_engineering_blog_net
