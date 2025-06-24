@@ -1,0 +1,15 @@
+server {
+    listen 80;
+    server_name ${NGINX_SERVER_NAME};
+
+    root /var/www/public;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/public;
+        try_files $uri =404;
+    }
+
+    location / {
+        return 404;
+    }
+}

@@ -2,12 +2,12 @@ version: "3.8"
 
 services:
   nginx:
-    image: nginx:alpine
+    image: nginx:1.25-alpine
     container_name: nginx_certbot_temp
     ports:
       - "80:80"
-    env_file:
-      - .env
+    environment:
+      - NGINX_SERVER_NAME=${NGINX_SERVER_NAME}
     volumes:
       - ./public:/var/www/public
       - ./nginx:/etc/nginx/templates
