@@ -53,6 +53,7 @@ services:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       - .:/var/www
+      - .env:/var/www/.env
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 1d & wait $${!}; done'"
     networks:
       - laravel_engineering_blog_net
