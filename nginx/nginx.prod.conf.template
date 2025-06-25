@@ -14,13 +14,13 @@ server {
 
 server {
     listen 443 ssl;
-    server_name $NGINX_SERVER_NAME;
+    server_name ${NGINX_SERVER_NAME};
 
     root /var/www/public;
     index index.php index.html index.htm;
 
-    ssl_certificate /etc/letsencrypt/live/$NGINX_SERVER_NAME/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/$NGINX_SERVER_NAME/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/${NGINX_SERVER_NAME}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${NGINX_SERVER_NAME}/privkey.pem;
     ssl_dhparam /etc/ssl/certs/ssl-dhparams.pem;
 
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -36,7 +36,7 @@ server {
         fastcgi_index index.php;
         include fastcgi_params;
 
-        fastcgi_param SCRIPT_FILENAME /var/www/public\$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME /var/www/public$fastcgi_script_name;
         fastcgi_param HTTPS on;
         fastcgi_param HTTP_X_FORWARDED_PROTO $scheme;
     }
