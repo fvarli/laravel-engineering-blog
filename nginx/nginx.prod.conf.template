@@ -21,7 +21,7 @@ server {
 
     ssl_certificate /etc/letsencrypt/live/${NGINX_SERVER_NAME}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/${NGINX_SERVER_NAME}/privkey.pem;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    ssl_dhparam /etc/ssl/certs/ssl-dhparams.pem;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
