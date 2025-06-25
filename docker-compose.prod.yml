@@ -34,7 +34,7 @@ services:
       - ./nginx/nginx.prod.conf.template:/etc/nginx/templates/nginx.conf.template
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
-      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
+      - ./nginx/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
     depends_on:
       - app
     env_file:
