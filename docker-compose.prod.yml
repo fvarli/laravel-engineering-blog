@@ -30,10 +30,10 @@ services:
       - "443:443"
     volumes:
       - .:/var/www
-      - ./nginx/nginx.prod.conf.template:/etc/nginx/templates/nginx.conf.template
-      - /var/lib/docker/volumes/certbot-etc/_data:/etc/letsencrypt
-      - /var/lib/docker/volumes/certbot-var/_data:/var/lib/letsencrypt
       - ./public:/var/www/public
+      - ./nginx/nginx.prod.conf.template:/etc/nginx/templates/nginx.conf.template
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
       - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
     depends_on:
       - app
@@ -52,12 +52,10 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
-      - .:/var/www
       - ./public:/var/www/public
-      - .env:/var/www/.env
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 1d & wait $${!}; done'"
     networks:
       - laravel_engineering_blog_net
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 1d & wait $${!}; done'"
 
 volumes:
   certbot-etc:
