@@ -1,4 +1,22 @@
 server {
+    listen 80 default_server;
+    server_name _;
+    return 444;
+}
+
+server {
+    listen 443 ssl default_server;
+    server_name _;
+
+    ssl_certificate /etc/letsencrypt/live/${NGINX_SERVER_NAME}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${NGINX_SERVER_NAME}/privkey.pem;
+    ssl_dhparam /etc/ssl/certs/ssl-dhparams.pem;
+
+    return 444;
+}
+
+
+server {
     listen 80;
     server_name ${NGINX_SERVER_NAME};
 
